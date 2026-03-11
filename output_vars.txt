@@ -1,0 +1,11 @@
+VAR
+  xRunCommand : BOOL;
+  rSpeedReference : REAL;
+  iFaultCode : INT;
+  sAlarmMessage : STRING;
+  ENUM_OperatingMode : ENUM;
+  tAccelTime : TIME;
+  tDecelTime : TIME;
+  iCmdSource : INT;
+  rFreqRef : REAL;
+END_VAR

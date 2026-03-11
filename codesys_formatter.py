@@ -33,13 +33,19 @@ prefix_map = {
     "ENUM":         "ENUM_",
 }
 
-print("VAR")
+output_file = "output_vars.txt"
+
 with open("tags.csv", newline="") as f:
     reader = csv.DictReader(f)
+    rows = list(reader)
 
-    for row in reader: 
-        name = row["name"]
-        dtype = row["dtype"]
-        prefix = prefix_map.get(dtype, "x")  # x = unknown/fallback
-        print(f"    {prefix}{name} : {dtype};")
-print("END_VAR")
+with open(output_file, "w") as out:
+        out.write("VAR\n")
+        for row in rows:
+            name = row["name"]
+            dtype = row["dtype"]
+            prefix = prefix_map.get(dtype, "null")
+            out.write(f"  {prefix}{name} : {dtype};\n")
+        out.write("END_VAR\n")
+
+print(f"Done - saved to {output_file}")

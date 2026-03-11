@@ -1,0 +1,10 @@
+name,dtype
+RunCommand,BOOL
+SpeedReference,REAL
+FaultCode,INT
+AlarmMessage,STRING
+OperatingMode,ENUM
+AccelTime,TIME
+DecelTime,TIME
+CmdSource,INT
+FreqRef,REAL

@@ -1,38 +1,7 @@
 # codesys_formatter.py
-# Input: raw tag list → Output: ST VAR declarations
-# Naming convention: b=BOOL, r=REAL, i=INT, u=UINT, w=WORD,
-#                    s=STRING, st=STRUCT, FB_=FUNCTION_BLOCK, arr=ARRAY
+# Input: tags.csv → Output: ST VAR declarations
 
-tags = [
-    ("RunCommand",      "BOOL"),
-    ("SpeedReference",  "REAL"),
-    ("FaultCode",       "INT"),
-    ("StatusWord",      "UINT"),
-    ("ControlWord",     "WORD"),
-    ("VFD_Interface",   "FUNCTION_BLOCK"),
-    ("AlarmMessage",    "STRING"),
-    ("DriveStatus",     "STRUCT"),
-    ("SpeedHistory",    "ARRAY"),
-    ("PumpCount",       "DINT"),
-    ("TankLevel",       "LREAL"),
-    ("MotorTorque",       "SINT"),
-    ("SensorRaw",         "USINT"),
-    ("TotalRunHours",     "UDINT"),
-    ("PositionCount",     "LINT"),
-    ("EncoderPulses",     "ULINT"),
-    ("CycleTime",         "TIME"),
-    ("PrecisionTimer",    "LTIME"),
-    ("ShiftStart",        "TIME_OF_DAY"),
-    ("MaintenanceDate",   "DATE"),
-    ("LastFaultStamp",    "DATE_AND_TIME"),
-    ("SensorBit",         "BIT"),
-    ("StatusByte",        "BYTE"),
-    ("DiagWord",          "DWORD"),
-    ("ExtendedStatus",    "LWORD"),
-    ("UnicodeTag",        "WSTRING"),
-    ("OperatingMode", "ENUM"),
-
-]
+import csv
 
 prefix_map = {
     "BOOL":           "x",
@@ -65,7 +34,12 @@ prefix_map = {
 }
 
 print("VAR")
-for name, dtype in tags:
-    prefix = prefix_map.get(dtype, "x")  # x = unknown/fallback
-    print(f"    {prefix}{name} : {dtype};")
+with open("tags.csv", newline="") as f:
+    reader = csv.DictReader(f)
+
+    for row in reader: 
+        name = row["name"]
+        dtype = row["dtype"]
+        prefix = prefix_map.get(dtype, "x")  # x = unknown/fallback
+        print(f"    {prefix}{name} : {dtype};")
 print("END_VAR")
